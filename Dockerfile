@@ -5,7 +5,7 @@ WORKDIR /
 ENV NPS_VERSION 0.17.3
 
 RUN set -x && \
-	wget --no-check-certificate https://github.com/cnlh/nps/releases/download/v${NPS_VERSION}/linux_amd64_server.tar.gz && \ 
+	wget --no-check-certificate https://github.com/cnlh/nps/releases/download/V${NPS_VERSION}/linux_amd64_server.tar.gz && \ 
 	tar xzf linux_amd64_server.tar.gz && \
 	cd /nps && \
 	mkdir \npsconf && \
