@@ -2,8 +2,7 @@ FROM golang:latest as builder
 
 WORKDIR /
 
-RUN apk add --no-cache git  build-base linux-headers && \
- 	git clone -b zh_cn https://github.com/cnlh/nps.git  && \
+RUN  git clone -b zh_cn https://github.com/cnlh/nps.git  && \
  	cd nps && \
  	go build
 
