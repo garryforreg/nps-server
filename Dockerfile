@@ -4,7 +4,7 @@ WORKDIR /
 
 RUN  git clone -b zh_cn https://github.com/cnlh/nps.git  && \
  	cd nps && \
- 	go build
+ 	go build cmd/nps/nps.go
 
 FROM alpine:3.6
 MAINTAINER garry <garryforreg@gmail.com>
