@@ -1,17 +1,22 @@
-FROM alpine:3.8
-MAINTAINER garry <garryforreg@gmail.com>
+FROM golang:latest as builder
 
+WORKDIR /
+
+RUN apk add --no-cache git  build-base linux-headers && \
+ 	git clone -b zh_cn https://github.com/cnlh/nps.git  && \
+ 	cd nps && \
+ 	go build
+
+FROM alpine:3.6
+MAINTAINER garry <garryforreg@gmail.com>
 WORKDIR /
 ENV NPS_VERSION 0.17.3
 
 RUN set -x && \
-	wget --no-check-certificate https://github.com/cnlh/nps/releases/download/V${NPS_VERSION}/linux_amd64_server.tar.gz && \ 
-	tar xzf linux_amd64_server.tar.gz && \
+	COPY --from=builder /nps/ /nps/ && \	
 	cd /nps && \
 	mkdir \npsconf && \
-	cp conf/* npsconf/ && \
-	cd .. && \
-	rm -rf *.tar.gz
+	cp conf/* npsconf/ 
 
 ADD start.sh /nps/npsconf/start.sh
 
