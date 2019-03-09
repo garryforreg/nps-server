@@ -1,21 +1,18 @@
-FROM golang:latest as builder
-
-WORKDIR /
-
-RUN  git clone -b zh_cn https://github.com/cnlh/nps.git  && \
- 	cd nps && \
- 	go build cmd/nps/nps.go
-
-FROM alpine:3.6
+FROM alpine:3.8
 MAINTAINER garry <garryforreg@gmail.com>
+
 WORKDIR /
 ENV NPS_VERSION 0.17.3
 
 RUN set -x && \
-	COPY --from=builder /nps/ /nps/ && \	
+	wget --no-check-certificate https://github.com/cnlh/nps/releases/download/V${NPS_VERSION}/linux_amd64_server.tar.gz && \ 
+	tar xzf linux_amd64_server.tar.gz && \
 	cd /nps && \
 	mkdir \npsconf && \
-	cp conf/* npsconf/ 
+	cp conf/* npsconf/ && \
+	cp /web/* /nps/web/*
+	cd .. && \
+	rm -rf *.tar.gz
 
 ADD start.sh /nps/npsconf/start.sh
 
