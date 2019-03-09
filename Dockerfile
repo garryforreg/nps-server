@@ -10,7 +10,7 @@ RUN set -x && \
 	cd /nps && \
 	mkdir \npsconf && \
 	cp conf/* npsconf/ && \
-	cp /web/* /nps/web/*
+	cp /web/* /nps/web/* && \
 	cd .. && \
 	rm -rf *.tar.gz
 
